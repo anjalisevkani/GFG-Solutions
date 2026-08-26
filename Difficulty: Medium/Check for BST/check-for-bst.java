@@ -12,26 +12,28 @@ class Node {
 
 
 class Solution {
-     Node prev = null;
+    Node prev=null;
+    boolean ans=true;
+    public void inorder(Node root){
+        if(root==null){
+            return;
+        }
+        inorder(root.left);
+        if(prev==null){
+            prev=root;
+        }else{
+            if(root.data<=prev.data){
+                ans=false;
+            }
+            prev=root;
+        }
+        inorder(root.right);
 
-     boolean isBST(Node root) {
-         if (root == null) {
-             return true;
-         }
 
-         // Check left subtree
-         if (!isBST(root.left)) {
-             return false;
-         }
+    }
 
-         // Check current node
-         if (prev != null && root.data <= prev.data) {
-             return false;
-         }
-
-         prev = root;
-
-         // Check right subtree
-         return isBST(root.right);
-     }
+    boolean isBST(Node root) {
+         inorder(root);
+         return ans;
+    }
  }
